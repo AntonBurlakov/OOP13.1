@@ -33,7 +33,7 @@ class Item:
         if len(name) <= 10:
             self.__name = name
         else:
-            self.__name = name[:11]
+            self.__name = name[:10]
 
     @classmethod
     def instantiate_from_csv(cls):
