@@ -19,7 +19,7 @@ def test_apply_discount(item):
 
 def test_instantiate_from_csv(item):
     item.instantiate_from_csv()  # создание объектов из данных файла
-    assert len(Item.all) == 1
+    assert len(Item.all) == 9
 
 
 def test_name(item):
@@ -36,4 +36,13 @@ def test_name_(item):
 def test_string_to_number(item):
     assert item.string_to_number('5') == 5
     assert item.string_to_number('5.0') == 5
+
     assert item.string_to_number('5.5') == 5
+
+
+def test_repr(item):
+    assert repr(item) == "Item(Ноутбук, 20000, 5)"
+
+
+def test_str(item):
+    assert str(item) == 'Ноутбук'
