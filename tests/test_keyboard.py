@@ -10,14 +10,10 @@ def test_keyboard():
     kb.change_lang()
     assert str(kb.language) == "RU"
 
-    kb.change_lang().change_lang().change_lang()
+    kb.change_lang().change_lang()
     assert str(kb.language) == "RU"
 
 
 def test_mixin():
     mix = MixinKeyboard()
     assert str(mix.language) == "EN"
-
-
-def test_mixin_language():
-    pass

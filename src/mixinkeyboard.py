@@ -1,11 +1,12 @@
 class MixinKeyboard:
     def __init__(self):
-        self.language = "EN"
+        self.__language = "EN"
 
     def change_lang(self):
-        if self.language == "EN":
-            self.language = "RU"
+        if self.__language == "EN":
+            self.__language = "RU"
         return self
 
+    @property
     def language(self):
-        return self.language
+        return self.__language
