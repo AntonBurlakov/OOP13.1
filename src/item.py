@@ -34,7 +34,8 @@ class Item:
     def __add__(self, other):
         if isinstance(other, self.__class__):
             return self.quantity + other.quantity
-        return None
+        raise TypeError("Unsupported operand types for +: '{}' and '{}'".format(
+            self.__class__.__name__, other.__class__.__name__))
 
     @property
     def name(self):
@@ -42,17 +43,17 @@ class Item:
 
     @name.setter
     def name(self, name):
-        if len(name) <= 10:
-            self.__name = name
-        else:
-            self.__name = name[:10]
+        self.__name = name[:10]
 
     @classmethod
     def instantiate_from_csv(cls):
+        cls.all.clear()
         with open(cls.items_path, 'r', encoding='windows-1251') as csv:
             data = DictReader(csv)
             for row in data:
-                print(cls(row['name'], row['price'], row['quantity']))
+                cls(row['name'],
+                    cls.string_to_number(row['price']),
+                    cls.string_to_number(row['quantity']))
 
     @staticmethod
     def string_to_number(decimal_string):
