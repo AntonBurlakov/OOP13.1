@@ -1,6 +1,7 @@
 from csv import DictReader
 
 from set import DATA_ITEMS
+from src.exp import InstantiateCSVError
 
 
 class Item:
@@ -48,12 +49,19 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         cls.all.clear()
-        with open(cls.items_path, 'r', encoding='windows-1251') as csv:
-            data = DictReader(csv)
-            for row in data:
-                cls(row['name'],
-                    cls.string_to_number(row['price']),
-                    cls.string_to_number(row['quantity']))
+        try:
+            with open(cls.items_path, 'r', encoding='windows-1251') as csv:
+                data = DictReader(csv)
+                for row in data:
+                    cls(row['name'],
+                        cls.string_to_number(row['price']),
+                        cls.string_to_number(row['quantity']))
+
+        except FileNotFoundError:
+            raise FileNotFoundError("_Отсутствует файл item.csv_")
+        except KeyError:
+            raise InstantiateCSVError('Файл item.csv поврежден_')
+
 
     @staticmethod
     def string_to_number(decimal_string):
@@ -72,3 +80,4 @@ class Item:
         Применяет установленную скидку для конкретного товара.
         """
         self.price *= self.pay_rate
+
